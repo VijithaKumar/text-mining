@@ -300,6 +300,15 @@ class Apologizing(TransformerMixin):
     def fit(self, X, y=None, **fit_params):
         return self
 
+class QMarks(TransformerMixin):
+
+    def transform(self, X, **transform_params):
+        modals = DataFrame(X.apply(lambda s: s.count('?'))
+        return modals
+
+    def fit(self, X, y=None, **fit_params):
+        return self
+
 class Norm(TransformerMixin):
 
     def transform(self, X, **transform_params):
@@ -377,6 +386,10 @@ combined_features= FeatureUnion([("tfd",vectorizer),
                                     ('nega',Neger()),
                                     ('scale',Norm())
                                     ])),
+				("qmarks",Pipeline([
+				    ('qm',QMarks()),
+				    ('scale',Norm())
+				    ])),
                                 ("gratitude",Gratitude()),
                                 ("deference",Deference()),
                                 ("greeting", Greeting()),
